@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Environment files (giữ bảo mật thông tin kết nối)
+.env
+.env.*
+!.env.example
+
+# Build & Cache
+dist/
+build/
+.expo/
+.next/
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System Files
+.DS_Store
+Thumbs.db
