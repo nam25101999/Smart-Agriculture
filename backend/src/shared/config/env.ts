@@ -1,0 +1,37 @@
+import dotenv from 'dotenv';
+import path from 'path';
+import { z } from 'zod';
+
+// Load .env from current directory or backend directory
+dotenv.config();
+dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+dotenv.config({ path: path.resolve(process.cwd(), 'backend/.env') });
+
+const envSchema = z.object({
+  PORT: z.string().default('5000').transform((val) => parseInt(val, 10)),
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
+  CORS_ORIGIN: z.string().default('*'),
+  LOG_LEVEL: z.string().default('info'),
+  DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
+  DIRECT_URL: z.string().optional(),
+  JWT_ACCESS_SECRET: z.string().min(16, 'JWT_ACCESS_SECRET must be at least 16 chars'),
+  JWT_ACCESS_EXPIRES_IN: z.string().default('15m'),
+  JWT_REFRESH_SECRET: z.string().min(16, 'JWT_REFRESH_SECRET must be at least 16 chars'),
+  JWT_REFRESH_EXPIRES_IN: z.string().default('7d'),
+  MQTT_BROKER_URL: z.string().default('mqtt://broker.emqx.io:1883'),
+  MQTT_USERNAME: z.string().optional().default(''),
+  MQTT_PASSWORD: z.string().optional().default(''),
+  MQTT_CLIENT_PREFIX: z.string().default('smartagri_backend'),
+  OUTBOX_POLL_INTERVAL_MS: z.string().default('3000').transform((val) => parseInt(val, 10)),
+  DEVICE_HEARTBEAT_TIMEOUT_MINUTES: z.string().default('10').transform((val) => parseInt(val, 10)),
+});
+
+const parsed = envSchema.safeParse(process.env);
+
+if (!parsed.success) {
+  console.error('❌ Invalid environment variables:', parsed.error.format());
+  process.exit(1);
+}
+
+export const env = parsed.data;
+
