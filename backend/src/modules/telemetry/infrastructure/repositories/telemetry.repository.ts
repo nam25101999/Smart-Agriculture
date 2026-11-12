@@ -116,7 +116,7 @@ export class TelemetryRepository {
       const val = Number(rawVal);
       if (isNaN(val)) continue;
 
-      const sensor = currentDevice.sensors.find((s) => s.metricName === metric);
+      const sensor = (currentDevice as any).sensors?.find((s: any) => s.metricName === metric);
 
       readings.push({
         deviceId: currentDevice.id,

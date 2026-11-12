@@ -16,12 +16,12 @@ export class GetProfileUseCase {
       fullName: user.fullName,
       phone: user.phone,
       status: user.status,
-      roles: user.userRoles.map((ur) => ur.role.code),
-      farmMemberships: user.farmMemberships.map((fm) => ({
+      roles: (user as any).userRoles?.map((ur: any) => ur.role.code) || [],
+      farmMemberships: (user as any).farmMemberships?.map((fm: any) => ({
         farmId: fm.farmId,
-        farmName: fm.farm.name,
-        role: fm.role.code,
-      })),
+        farmName: fm.farm?.name || '',
+        role: fm.role?.code || '',
+      })) || [],
       createdAt: user.createdAt,
     };
   }

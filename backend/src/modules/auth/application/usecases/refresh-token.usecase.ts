@@ -24,7 +24,7 @@ export class RefreshTokenUseCase {
     await this.userRepository.revokeRefreshToken(oldHash);
 
     // 4. Issue new token pair
-    const globalRoles = user.userRoles.map((ur) => ur.role.code);
+    const globalRoles = (user as any).userRoles.map((ur: any) => ur.role.code);
     const newTokens = JwtService.generateTokens({
       id: user.id,
       email: user.email,
