@@ -47,7 +47,7 @@ export class PushNotificationService {
     try {
       logger.info({ count: messages.length, title }, '[PushNotification] Đang gửi thông báo đẩy qua Expo Push API');
 
-      const response = await fetch(this.EXPO_PUSH_URL, {
+      const response: any = await fetch(this.EXPO_PUSH_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ export class PushNotificationService {
       select: { token: true },
     });
 
-    const tokens = Array.from(new Set(deviceTokens.map((dt) => dt.token)));
+    const tokens: string[] = Array.from(new Set(deviceTokens.map((dt) => dt.token))) as string[];
     logger.info(
       { totalTokens: tokens.length, title },
       '[PushNotification] Bắt đầu phát sóng thông báo đẩy tới toàn bộ người dùng'

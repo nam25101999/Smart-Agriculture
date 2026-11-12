@@ -1,12 +1,17 @@
-import { PrismaClient } from '@prisma/client';
+import * as PrismaPkg from '@prisma/client';
 import { logger } from '../../shared/logger/index.js';
 
-class DatabaseClient {
-  private static instance: PrismaClient;
+const PrismaClientConstructor: any =
+  (PrismaPkg as any).PrismaClient ||
+  (PrismaPkg as any).default?.PrismaClient ||
+  (PrismaPkg as any).default;
 
-  public static getInstance(): PrismaClient {
+class DatabaseClient {
+  private static instance: any;
+
+  public static getInstance(): any {
     if (!DatabaseClient.instance) {
-      DatabaseClient.instance = new PrismaClient({
+      DatabaseClient.instance = new PrismaClientConstructor({
         log: [
           { emit: 'event', level: 'query' },
           { emit: 'event', level: 'error' },
@@ -15,8 +20,7 @@ class DatabaseClient {
       });
 
       // Optional: attach query logger in debug mode
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (DatabaseClient.instance as any).$on('error', (e: any) => {
+      (DatabaseClient.instance as any).$on?.('error', (e: any) => {
         logger.error(e, 'Prisma Client Error');
       });
     }
@@ -25,5 +29,5 @@ class DatabaseClient {
   }
 }
 
-export const prisma = DatabaseClient.getInstance();
+export const prisma: any = DatabaseClient.getInstance();
 

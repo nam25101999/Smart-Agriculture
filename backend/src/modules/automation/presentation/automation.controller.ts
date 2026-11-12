@@ -4,8 +4,8 @@ import { ResponseUtil } from '../../../shared/response/api-response.js';
 import { NotFoundError } from '../../../shared/errors/app-error.js';
 
 export class AutomationController {
-  public getRules = async (req: Request, res: Response): Promise<void> => {
-    const farmId = req.query.farmId as string;
+  public getRules = async (req: any, res: any): Promise<void> => {
+    const farmId = req.query?.farmId as string;
     const rules = await prisma.automationRule.findMany({
       where: farmId ? { farmId } : undefined,
       include: { zone: true, farm: { select: { id: true, name: true } } },
@@ -14,13 +14,13 @@ export class AutomationController {
     ResponseUtil.success(res, rules, 'Lấy danh sách quy tắc tự động hóa thành công');
   };
 
-  public createRule = async (req: Request, res: Response): Promise<void> => {
+  public createRule = async (req: any, res: any): Promise<void> => {
     const rule = await prisma.automationRule.create({ data: req.body });
     ResponseUtil.created(res, rule, 'Tạo quy tắc tự động hóa thành công');
   };
 
-  public updateRule = async (req: Request, res: Response): Promise<void> => {
-    const id = req.params.id as string;
+  public updateRule = async (req: any, res: any): Promise<void> => {
+    const id = req.params?.id as string;
     const rule = await prisma.automationRule.update({
       where: { id },
       data: req.body,
@@ -28,13 +28,13 @@ export class AutomationController {
     ResponseUtil.success(res, rule, 'Cập nhật quy tắc tự động hóa thành công');
   };
 
-  public deleteRule = async (req: Request, res: Response): Promise<void> => {
-    const id = req.params.id as string;
+  public deleteRule = async (req: any, res: any): Promise<void> => {
+    const id = req.params?.id as string;
     await prisma.automationRule.delete({ where: { id } });
     ResponseUtil.success(res, null, 'Xóa quy tắc tự động hóa thành công');
   };
 
-  public getLogs = async (req: Request, res: Response): Promise<void> => {
+  public getLogs = async (req: any, res: any): Promise<void> => {
     const logs = await prisma.automationLog.findMany({
       include: { rule: true },
       orderBy: { executedAt: 'desc' },
