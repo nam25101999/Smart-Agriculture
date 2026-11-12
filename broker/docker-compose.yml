@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mqtt-broker:
+    image: eclipse-mosquitto:2.0.18
+    container_name: smartagri-mqtt-broker
+    restart: unless-stopped
+    ports:
+      - "1883:1883"   # Standard MQTT Port (TCP)
+      - "9001:9001"   # MQTT over WebSockets
+    volumes:
+      - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./config/password_file:/mosquitto/config/password_file:ro
+      - ./config/acl.conf:/mosquitto/config/acl.conf:ro
+      - ./data:/mosquitto/data
+      - ./log:/mosquitto/log
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+    networks:
+      - smartagri-network
+
+networks:
+  smartagri-network:
+    driver: bridge
+

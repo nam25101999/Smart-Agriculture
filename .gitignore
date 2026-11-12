@@ -20,6 +20,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Temporary Office & Editor files
+~$*
+*.tmp
+*.bak
+*.swp
+
 # System Files
 .DS_Store
 Thumbs.db
+

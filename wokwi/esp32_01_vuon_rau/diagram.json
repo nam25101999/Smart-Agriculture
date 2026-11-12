@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "author": "Smart Agriculture Team",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -150, "left": -120, "attrs": { "temperature": "28.5", "humidity": "65" } },
+    { "type": "wokwi-potentiometer", "id": "pot1", "top": 150, "left": -150, "attrs": { "label": "Soil Moisture" } },
+    { "type": "wokwi-led", "id": "led_pump", "top": -150, "left": 150, "attrs": { "color": "green", "label": "Water Pump" } },
+    { "type": "wokwi-led", "id": "led_fan", "top": -70, "left": 150, "attrs": { "color": "blue", "label": "Cooling Fan" } },
+    { "type": "wokwi-resistor", "id": "r1", "top": -110, "left": 150, "attrs": { "value": "220" } },
+    { "type": "wokwi-resistor", "id": "r2", "top": -30, "left": 150, "attrs": { "value": "220" } }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:GND.1", "dht1:GND", "black", [ "v0" ] ],
+    [ "esp:3V3", "dht1:VCC", "red", [ "v0" ] ],
+    [ "esp:15", "dht1:SDA", "gold", [ "v0" ] ],
+    [ "esp:GND.2", "pot1:GND", "black", [ "v0" ] ],
+    [ "esp:3V3", "pot1:VCC", "red", [ "v0" ] ],
+    [ "esp:34", "pot1:SIG", "orange", [ "v0" ] ],
+    [ "esp:2", "r1:1", "green", [ "v0" ] ],
+    [ "r1:2", "led_pump:A", "green", [ "v0" ] ],
+    [ "esp:GND.1", "led_pump:C", "black", [ "v0" ] ],
+    [ "esp:4", "r2:1", "blue", [ "v0" ] ],
+    [ "r2:2", "led_fan:A", "blue", [ "v0" ] ],
+    [ "esp:GND.1", "led_fan:C", "black", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
+
