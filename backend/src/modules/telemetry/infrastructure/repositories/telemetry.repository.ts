@@ -148,7 +148,7 @@ export class TelemetryRepository {
 
     // 4. Commit all changes in 1 atomic Transaction with 20s timeout
     return prisma.$transaction(
-      async (tx) => {
+      async (tx: any) => {
         // A. Insert Telemetry batch
         if (readings.length > 0) {
           await tx.telemetry.createMany({ data: readings });

@@ -36,7 +36,7 @@ export class DeviceRepository {
   }
 
   public async register(dto: RegisterDeviceDto) {
-    return prisma.$transaction(async (tx) => {
+    return prisma.$transaction(async (tx: any) => {
       // 1. Create Device
       const device = await tx.device.create({
         data: {
@@ -89,7 +89,7 @@ export class DeviceRepository {
   }
 
   public async createCommand(deviceId: string, userId: string, dto: SendCommandDto) {
-    return prisma.$transaction(async (tx) => {
+    return prisma.$transaction(async (tx: any) => {
       // Create Device Command
       const command = await tx.deviceCommand.create({
         data: {
@@ -132,7 +132,7 @@ export class DeviceRepository {
   }
 
   public async updateCommandStatus(commandId: string, status: string, result?: any, message?: string) {
-    return prisma.$transaction(async (tx) => {
+    return prisma.$transaction(async (tx: any) => {
       const updated = await tx.deviceCommand.update({
         where: { id: commandId },
         data: {

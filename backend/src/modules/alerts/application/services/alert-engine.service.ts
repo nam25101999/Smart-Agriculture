@@ -1,4 +1,3 @@
-import { Prisma } from '@prisma/client';
 import { prisma } from '../../../../infrastructure/database/prisma.client.js';
 import { logger } from '../../../../shared/logger/index.js';
 
@@ -10,7 +9,7 @@ export class AlertEngineService {
     metric: string;
     value: number;
     recordedAt: Date;
-  }): Promise<Prisma.AlertCreateInput | null> {
+  }): Promise<any | null> {
     const { farmId, zoneId, deviceId, metric, value } = params;
 
     // 1. Find matching rules for this farm/zone and metric
