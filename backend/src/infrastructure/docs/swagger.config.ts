@@ -13,6 +13,10 @@ export const swaggerDocument = {
   },
   servers: [
     {
+      url: '/',
+      description: 'Current Host (Vercel Production / Local)',
+    },
+    {
       url: 'http://localhost:5001',
       description: 'Local Development Server',
     },

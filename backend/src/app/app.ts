@@ -47,8 +47,22 @@ export const createApp = (): Express => {
     );
   });
 
-  // Swagger UI Documentation
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  // Swagger UI Documentation (Hỗ trợ CDN để hiển thị hoàn hảo trên Vercel Serverless)
+  const swaggerCustomOptions: swaggerUi.SwaggerUiOptions = {
+    customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui.min.css',
+    customJs: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui-bundle.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui-standalone-preset.min.js',
+    ],
+    customSiteTitle: 'Smart Agriculture RESTful API - Swagger UI',
+  };
+
+  app.get('/api-docs.json', (_req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerDocument);
+  });
+
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerCustomOptions));
 
   // REST API v1 Routes
   const apiV1 = express.Router();
