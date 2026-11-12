@@ -19,3 +19,4 @@ if (!fs.existsSync(indexFile)) {
 }
 
 console.log('✔ Output directory "public" is verified for Vercel');
+
