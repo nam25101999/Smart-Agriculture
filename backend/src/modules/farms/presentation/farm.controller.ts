@@ -63,7 +63,7 @@ export class FarmController {
   public getZoneTelemetry = async (req: Request, res: Response): Promise<void> => {
     const zoneId = req.params.zoneId as string;
     const zone = await this.farmRepository.findZoneById(zoneId);
-    const deviceIds = (zone?.devices || []).map((d) => d.id);
+    const deviceIds = (zone?.devices || []).map((d: any) => d.id);
     const telemetry = await prisma.telemetry.findMany({
       where: { deviceId: { in: deviceIds } },
       orderBy: { recordedAt: 'desc' },

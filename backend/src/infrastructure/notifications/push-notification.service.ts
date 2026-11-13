@@ -78,7 +78,7 @@ export class PushNotificationService {
       select: { token: true },
     });
 
-    const tokens = deviceTokens.map((dt) => dt.token);
+    const tokens = deviceTokens.map((dt: any) => dt.token);
     if (tokens.length > 0) {
       await this.sendPush(tokens, title, body, data);
     }
@@ -97,7 +97,7 @@ export class PushNotificationService {
       select: { token: true },
     });
 
-    const tokens: string[] = Array.from(new Set(deviceTokens.map((dt) => dt.token))) as string[];
+    const tokens: string[] = Array.from(new Set(deviceTokens.map((dt: any) => dt.token))) as string[];
     logger.info(
       { totalTokens: tokens.length, title },
       '[PushNotification] Bắt đầu phát sóng thông báo đẩy tới toàn bộ người dùng'
@@ -132,7 +132,7 @@ export class PushNotificationService {
       return;
     }
 
-    const userIds = [farm.ownerId, ...farm.members.map((m) => m.userId)];
+    const userIds = [farm.ownerId, ...farm.members.map((m: any) => m.userId)];
     const uniqueUserIds = Array.from(new Set(userIds));
 
     const deviceTokens = await prisma.deviceToken.findMany({
@@ -143,7 +143,7 @@ export class PushNotificationService {
       select: { token: true },
     });
 
-    const tokens = deviceTokens.map((dt) => dt.token);
+    const tokens = deviceTokens.map((dt: any) => dt.token);
     if (tokens.length > 0) {
       await this.sendPush(tokens, title, body, data);
     } else {

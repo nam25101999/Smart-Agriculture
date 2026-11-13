@@ -156,7 +156,7 @@ const processOutboxEvent = async (event: any): Promise<void> => {
             });
 
             if (farm) {
-              const userIds = Array.from(new Set([farm.ownerId, ...farm.members.map((m) => m.userId)]));
+              const userIds = Array.from(new Set([farm.ownerId, ...farm.members.map((m: any) => m.userId)]));
               await prisma.notification.createMany({
                 data: userIds.map((userId) => ({
                   userId,
@@ -171,7 +171,7 @@ const processOutboxEvent = async (event: any): Promise<void> => {
             const allUsers = await prisma.user.findMany({ select: { id: true } });
             if (allUsers.length > 0) {
               await prisma.notification.createMany({
-                data: allUsers.map((u) => ({
+                data: allUsers.map((u: any) => ({
                   userId: u.id,
                   title,
                   body,

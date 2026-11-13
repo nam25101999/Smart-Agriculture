@@ -22,7 +22,7 @@ export class LoginUseCase {
       throw new UnauthorizedError('Email hoặc mật khẩu không chính xác');
     }
 
-    const globalRoles = user.userRoles.map((ur) => ur.role.code);
+    const globalRoles = user.userRoles.map((ur: any) => ur.role.code);
 
     const tokens = JwtService.generateTokens({
       id: user.id,

@@ -43,7 +43,7 @@ export class DeviceController {
     ];
 
     const result = standardCodes.map((std) => {
-      const found = dbDevices.find((d) => d.deviceCode === std.deviceCode);
+      const found = dbDevices.find((d: any) => d.deviceCode === std.deviceCode);
       return {
         deviceCode: std.deviceCode,
         name: found?.name || std.name,

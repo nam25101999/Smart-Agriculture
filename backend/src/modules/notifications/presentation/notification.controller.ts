@@ -115,7 +115,7 @@ export class NotificationController {
       const allUsers = await prisma.user.findMany({ select: { id: true } });
       if (allUsers.length > 0) {
         await prisma.notification.createMany({
-          data: allUsers.map((u) => ({
+          data: allUsers.map((u: any) => ({
             userId: u.id,
             title,
             body,

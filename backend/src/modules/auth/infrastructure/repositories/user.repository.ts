@@ -35,7 +35,7 @@ export class UserRepository {
   }
 
   public async create(data: RegisterDto & { passwordHash: string; defaultRoleId?: string }) {
-    return prisma.$transaction(async (tx) => {
+    return prisma.$transaction(async (tx: any) => {
       const user = await tx.user.create({
         data: {
           email: data.email,
